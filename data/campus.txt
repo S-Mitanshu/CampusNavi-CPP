@@ -1,0 +1,46 @@
+# CampusNavi sample campus
+# Coordinates are in metres. Floor height is 4 m (see Location.h).
+# RULE: every edge weight must be >= the straight-line distance between its
+# endpoints, otherwise the A* heuristic could overestimate (see Graph.h).
+
+[LOCATIONS]
+# id,        building, floor, type,      x,  y
+A101,        A, 1, Classroom,  0,  0
+A102,        A, 1, Classroom,  5,  0
+A103,        A, 1, Lab,        9,  2
+A-Hall-1,    A, 1, Corridor,   5,  4
+A-Stair-1,   A, 1, Staircase,  5,  8
+A-Elev-1,    A, 1, Elevator,   9,  8
+A-Stair-2,   A, 2, Staircase,  5,  8
+A-Elev-2,    A, 2, Elevator,   9,  8
+A201,        A, 2, Office,     0,  8
+B201,        B, 2, Classroom, 17,  8
+B202,        B, 2, Classroom, 22,  8
+B203,        B, 2, Lab,       22, 14
+B-Hall-2,    B, 2, Corridor,  17, 12
+Z999,        Z, 1, Other,     50, 50
+
+[EDGES]
+# Floor 1, building A
+A101,      A102,      5
+A102,      A103,      5
+A102,      A-Hall-1,  4
+A-Hall-1,  A-Stair-1, 4
+A-Hall-1,  A-Elev-1,  6
+A103,      A-Elev-1,  6
+A-Stair-1, A-Elev-1,  4
+# Floor transitions: normal edges, as the PRD says. Elevator is slower (waiting).
+A-Stair-1, A-Stair-2, 6
+A-Elev-1,  A-Elev-2,  10
+# Floor 2, building A
+A-Stair-2, A-Elev-2,  4
+A-Stair-2, A201,      5
+# Skybridge from A to B on floor 2
+A-Stair-2, B201,      12
+A-Elev-2,  B201,      8
+# Floor 2, building B
+B201,      B202,      5
+B202,      B203,      6
+B201,      B-Hall-2,  4
+B-Hall-2,  B203,      6
+# Z999 (the shed) is deliberately NOT connected: it tests "No route found."

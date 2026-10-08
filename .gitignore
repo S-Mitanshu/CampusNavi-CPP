@@ -1,0 +1,6 @@
+build/
+*.o
+*.exe
+malformed_test_campus.txt
+.vscode/
+.idea/
